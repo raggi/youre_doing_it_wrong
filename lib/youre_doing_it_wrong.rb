@@ -6,14 +6,14 @@ module YoureDoingItWrong
     [Object, Kernel, Class, Module].each do |c|
       c.class_eval do
         def method_added *a
-          warn "[YDIW] You did it wrong @ #{caller[1]} (method_added)"
+          warn "[YDIW] You did it wrong @ #{caller[1]} (method_added)" if caller[0] !~ /#{__FILE__}/
           super if defined? super
         end
 
         alias singleton_method_added method_added
 
         def extended(base)
-          warn "[YDIW] You did it wrong @ #{caller[1]} (extend)"
+          warn "[YDIW] You did it wrong @ #{caller[1]} (extend)" if caller[0] !~ /#{__FILE__}/
           super if defined? super
         end
       end
